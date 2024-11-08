@@ -3,7 +3,9 @@ const cors = require('cors');
 const db = require('./db');
 const app = express();
 require('dotenv').config();
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3001', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']}));
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());

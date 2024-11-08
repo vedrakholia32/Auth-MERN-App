@@ -26,7 +26,7 @@ function UpdatePassword() {
 
     try {
       await axios.put(
-        'http://localhost:5000/profile/password',
+        'http://localhost:3000/profile/update-password',
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },

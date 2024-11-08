@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Profile.css';  // Import the CSS file
 
 function Profile() {
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    // console.log(token);
-    
+
     if (!token) {
       navigate('/login');
     } else {
@@ -17,34 +19,40 @@ function Profile() {
         .get('http://localhost:3000/profile', {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .then((response) => setUserData(response.data))
+        .then((response) => {
+          setUserData(response.data);
+          setLoading(false);
+        })
         .catch((err) => {
+          setLoading(false);
+          setError('Error fetching profile data');
           console.error(err);
           navigate('/login');
         });
     }
   }, [navigate]);
 
-   const handleLogout = () => {
-    // Remove token from localStorage to log out the user
+  const handleLogout = () => {
     localStorage.removeItem('token');
-    // Redirect to the login page
     navigate('/login');
   };
 
   return (
-    <div>
+    <div className="profile-container">
       <h2>User Profile</h2>
-      {userData ? (
-        <div>
-          <p>Name: {userData.name}</p>
-          <p>Email: {userData.email}</p>
-        </div>
-      ) : (
+
+      {loading ? (
         <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <div className="profile-info">
+          <p><strong>Name:</strong> {userData.name}</p>
+          <p><strong>Email:</strong> {userData.email}</p>
+        </div>
       )}
+
       <nav>
-        {/* <button onClick={() => window.location.href = '/update-password'}>Update Password</button> */}
         <button onClick={handleLogout}>Logout</button>
       </nav>
     </div>

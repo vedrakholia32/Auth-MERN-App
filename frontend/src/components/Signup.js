@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Signup.css';  
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -33,15 +34,16 @@ function Signup() {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="signup-container">
+      <h2 className="signup-heading">Sign Up</h2>
+      <form onSubmit={handleSubmit} className="signup-form">
         <input
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="Full Name"
           value={formData.name}
           onChange={handleChange}
+          className="signup-input"
           required
         />
         <input
@@ -50,6 +52,7 @@ function Signup() {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
+          className="signup-input"
           required
         />
         <input
@@ -58,14 +61,16 @@ function Signup() {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
+          className="signup-input"
           required
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="signup-button">Sign Up</button>
       </form>
-      {error && <p>{error}</p>}
-
-      <nav>
-        <button onClick={() => window.location.href = '/login'}>Already have an account? Login</button>
+      {error && <p className="error-message">{error}</p>}
+      <nav className="login-link">
+        <button onClick={() => window.location.href = '/login'} className="link-button">
+          Already have an account? Login
+        </button>
       </nav>
     </div>
   );

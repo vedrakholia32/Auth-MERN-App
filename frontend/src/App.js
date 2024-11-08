@@ -27,18 +27,14 @@ function Header() {
 
   const token = localStorage.getItem('token'); // Check if the user is logged in
 
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove token on logout
-    navigate('/login'); // Redirect to login
-  };
 
   return (
     <nav>
       {/* Render buttons based on whether the user is logged in */}
       {!token ? (
         <>
-          <button onClick={() => navigate('/signup')}>Sign Up</button>
-          <button onClick={() => navigate('/login')}>Login</button>
+          {/* <button onClick={() => navigate('/signup')}>Sign Up</button>
+          <button onClick={() => navigate('/login')}>Login</button> */}
         </>
       ) : (
         <>

@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../models/user');
 const router = express.Router()
 const { jwtAuthMiddleware, generateToken } = require('./../jwt');
+const bcrypt = require('bcrypt');
 
 //Signup
 router.post('/signup', async (req, res) => {
@@ -33,33 +34,29 @@ router.post('/signup', async (req, res) => {
 })
 
 // Login router
-router.post('/login', async (req, res)=>{
-    try { 
-        // Extract aadharCardNumber and password from request body
-        const {aadharCardNumber, password} = req.body;
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
 
-        // Find the user bu aadharCardNumber
-        const user = await User.findOne({aadharCardNumber:aadharCardNumber})
-        
-        // If user does not exist or password does not match, return error
-        if(!user || !(await user.comparePassword(password))){
-            return res.status(401).json({error:"Invalid username or password"});
+        // Find the user by email
+        const user = await User.findOne({ email });
+        if (!user || !(await user.comparePassword(password))) {
+            return res.status(401).json({ error: "Invalid username or password" });
         }
 
-        // generate Token 
+        // Generate JWT token
         const payload = {
-            id: user.id,
-        }
+            id: user._id, // Use _id
+        };
 
         const token = generateToken(payload);
-        //return token as response
-        res.json({token})
-
+        res.json({ token });
     } catch (error) {
         console.error(error);
-        res.status(500).json({error: 'Internal Server Error'});
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 // Profile Route
 router.get('/profile', jwtAuthMiddleware, async (req, res)=>{
@@ -67,7 +64,7 @@ router.get('/profile', jwtAuthMiddleware, async (req, res)=>{
         const userData = req.user;
         const userID = userData.userData.id;
         const user = await User.findById(userID);
-        res.status(200).json(user)  ;      
+        res.status(200).json(user)  ;    
     } catch (error) {
         console.error(error);
         res.status(500).json({error: 'Internal Server Error'});

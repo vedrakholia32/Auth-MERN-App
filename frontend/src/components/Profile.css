@@ -1,0 +1,61 @@
+/* Profile.css */
+
+/* Overall container styling */
+.profile-container {
+    margin: 20px auto;
+    max-width: 600px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Profile information styling */
+  .profile-info {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  /* Styling for each information field */
+  .profile-info p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  .profile-info strong {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Loading message */
+  .profile-container p {
+    font-size: 18px;
+    color: #666;
+  }
+  
+  /* Button styling */
+  button {
+    margin: 20px;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover effect for button */
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
