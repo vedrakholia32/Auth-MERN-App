@@ -3,17 +3,7 @@ const cors = require('cors');
 const db = require('./db');
 const app = express();
 require('dotenv').config();
-app.use(cors({
-    origin: function (origin, callback) {
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(cors());
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
