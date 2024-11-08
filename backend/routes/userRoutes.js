@@ -71,33 +71,39 @@ router.get('/profile', jwtAuthMiddleware, async (req, res)=>{
     }
 })
 
-router.put('/profile/password', jwtAuthMiddleware, async (req, res) => {
-    try{
-        const userId = req.userData.user; // Extract the id from the Token
-        const {currentPassword, newPassword} = req.body // Extract current new password from request body
-        
-        if (!currentPassword || !newPassword) {
-            return res.status(400).json({ error: 'Both currentPassword and newPassword are required' });
-        }
-
-        // Find the user bu userID
-        const user = await User.findById(userId);
-
-        // If password does not match, return error
-        if(!user || !(await user.comparePassword(currentPassword))){
-            return res.status(401).json({error:"Invalid username or password"});
-        }
-
-        user.password = newPassword
-        await user.save()
-
-        console.log('password updated');
-        res.status(200).json({message:'password updated'})
-    }catch(error) {
-        console.log(error);
-        res.status(500).json({ error: 'Internal server Error' });
+router.put('/profile/update-password', jwtAuthMiddleware, async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+  
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Both current and new passwords are required' });
     }
-})
+  
+    try {
+      const user = await User.findById(req.user.userData.id); // Get the user by ID from JWT token
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Compare current password with the stored one
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ error: 'Current password is incorrect' });
+      }
+  
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+  
+      // Update the password in the database
+      user.password = hashedPassword;
+      await user.save();
+  
+      res.status(200).json({ message: 'Password updated successfully' });
+  
+    } catch (err) {
+      console.error('Error updating password:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 router.delete('/:id', async (req, res) => {
     try {

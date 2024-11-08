@@ -33,6 +33,10 @@ function Signup() {
     }
   };
 
+  const goHome = () => {
+    navigate('/');  // Redirect to home page
+  };
+
   return (
     <div className="signup-container">
       <h2 className="signup-heading">Sign Up</h2>
@@ -72,6 +76,10 @@ function Signup() {
           Already have an account? Login
         </button>
       </nav>
+
+      <button onClick={goHome} className="home-button">
+        Home
+      </button>
     </div>
   );
 }

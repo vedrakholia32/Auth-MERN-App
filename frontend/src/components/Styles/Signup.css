@@ -73,18 +73,16 @@
     color: #007bff;
     text-decoration: none;
     font-weight: bold;
-    /* Removed hover effect */
+    transition: color 0.3s ease;
 }
 
-/* Link hover effect (removed any changes when hovering) */
 .login-link a:hover {
-    color: #007bff;
-    background-color: transparent;  /* No change on hover */
-    padding: 0;
-    border-radius: 0;
+    color: white;
+    background-color: white;  /* Blue background on hover */
+    padding: 5px 10px;
+    border-radius: 4px;
 }
 
-/* Link button styling */
 .link-button {
     background: none;
     color: #007bff;
@@ -93,8 +91,7 @@
     cursor: pointer;
 }
 
-/* Link button hover effect (removed any changes when hovering) */
 .link-button:hover {
-    color: #007bff;
-    background-color: transparent;  /* No change on hover */
+    color: white;
+    background-color: #007bff;
 }
