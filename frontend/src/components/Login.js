@@ -22,7 +22,7 @@ function Login() {
     e.preventDefault();
     try {
       // Corrected: Use formData.email and formData.password
-      const response = await axios.post('http://localhost:3000/login', {
+      const response = await axios.post(`${process.env.REACT_APP_API}/login`, {
         email: formData.email,
         password: formData.password,
       });

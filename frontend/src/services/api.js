@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Set base URL for the API requests
 const API = axios.create({
-  baseURL: 'http://localhost:5000', // API server URL
+  baseURL: process.env.REACT_APP_API, // API server URL
 });
 
 // Signup API request

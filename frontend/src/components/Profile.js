@@ -16,7 +16,7 @@ function Profile() {
       navigate('/login');
     } else {
       axios
-        .get('http://localhost:3000/profile', {
+        .get(`${process.env.REACT_APP_API}/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
